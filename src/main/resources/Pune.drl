@@ -1,0 +1,24 @@
+import com.sample.ItemCity;
+import java.math.BigDecimal;
+global org.slf4j.Logger logger;
+
+
+// declare any global variables here
+dialect "java"
+rule "Pune Medicine Item"
+   when
+      item : ItemCity (purchaseCity == ItemCity.City.PUNE,
+         typeofItem == ItemCity.Type.MEDICINES)
+   then
+      BigDecimal tax = new BigDecimal(0.0);
+      item.setLocalTax(tax.multiply(item.getSellPrice()));
+end
+
+rule "Pune Groceries Item"
+   when
+      item : ItemCity(purchaseCity == ItemCity.City.PUNE,
+         typeofItem == ItemCity.Type.GROCERIES)
+   then
+      BigDecimal tax = new BigDecimal(2.0);
+      item.setLocalTax(tax.multiply(item.getSellPrice()));
+end
